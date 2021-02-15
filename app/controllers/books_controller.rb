@@ -1,16 +1,49 @@
 class BooksController < ApplicationController
 
+  before_action :authenticate_user!
+
+
   def index
-    @books= Book.all
     @book= Book.new
-
-
+    @books= Book.all
+    @user= current_user
   end
 
   def create
+    @books= Book.all
+    @user= current_user
+
     @book= Book.new(book_params)
     @book.user_id = current_user.id
-    @book.save
+  if @book.save
+    redirect_to book_path(@book.id)
+  else
+    render :index
+  end
+  end
+
+  def show
+    @book1= Book.new
+    @book= Book.find(params[:id])
+    @user= @book.user
+  end
+
+  def edit
+    @book= Book.find(params[:id])
+  end
+
+  def update
+    @book= Book.find(params[:id])
+  if @book.update(book_params)
+    redirect_to book_path(@book.id)
+  else
+    render :edit
+  end
+  end
+
+  def destroy
+    book= Book.find(params[:id])
+    book.destroy
     redirect_to books_path
   end
 
@@ -19,4 +52,11 @@ class BooksController < ApplicationController
     params.require(:book).permit(:title, :body)
   end
 
+  before_action :ensure_current_user, only: [:edit]
+  def ensure_current_user
+    @book= Book.find(params[:id])
+    unless @book.user == current_user
+      redirect_to books_path
+    end
+  end
 end

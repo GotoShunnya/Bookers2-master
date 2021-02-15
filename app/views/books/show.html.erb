@@ -1,0 +1,54 @@
+<% if @book1.errors.any? %>
+<h1><%= @book1.errors.count %>error</h1>
+<% @book1.errors.full_messages.each do |message| %>
+<ul type="disc"><li><%= message %></li></ul>
+<% end %>
+<% end %>
+
+<h1>User info</h1>
+
+    <p><%= attachment_image_tag @user,:profile_image, format:"jpeg", fallback:"no_image.jpg", size:"100x100" %></p>
+    <p>name<%= @user.name %></p>
+    <p>introduction<%= @user.introduction %></p>
+
+<p><%= link_to "edit", user_path(current_user) %></p>
+
+
+
+
+
+
+<h1>New book</h1>
+
+<%= form_with model: @book1, local: true do |f| %>
+
+<h4>Title</h4>
+<%= f. text_field :title %>
+<h4>Opinion</h4>
+<%= f. text_area :body %>
+
+<%= f.submit "Create Book" %>
+<% end %>
+
+
+<h1>Book detail</h1>
+
+<table>
+
+
+  <thead>
+    <tr>
+      <td><span><%= attachment_image_tag @user,:profile_image, format:"jpeg", fallback:"no_image.jpg", size:"50x50" %>
+                <P><%= link_to @user.name, user_path(@user) %></p>
+      </span></td>
+      <td><span><%= link_to @book.title %></span></td>
+      <td><span><%= @book.body %></span></td>
+
+<% if current_user == @user %>
+      <td><span><%= link_to "Edit", edit_book_path(@book) %></span></td>
+      <td><span><%= link_to "Destroy", book_path, method: :delete %></span></td>
+      <% end %>
+    </tr>
+  </thead>
+
+</table>

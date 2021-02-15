@@ -1,0 +1,23 @@
+<h1>User info</h1>
+
+<% if @user.errors.any? %>
+<h1><%= @user.errors.count %>error</h1>
+<% @user.errors.full_messages.each do |message| %>
+<ul type= "disc"><li><%= message %></li></ul>
+<% end %>
+<% end %>
+
+<%= form_with model:@user, local: true do |f| %>
+
+<p><label for="inputName">Name</label></p>
+<%= f.text_field:name, autofocus: true, id:"inputName", placeholder:"name" %>
+
+<p><label for="inputImage">Image</label></p>
+<%= f.attachment_field :profile_image, placeholder:"profile_image_id" %>
+
+<p><label for="inputIntroduction">Introduction</label></p>
+<%= f.text_field :introduction, autofocus: true, id:"inputIntroduction",placeholder:"introduction" %>
+
+<p><%= f.submit "Update User" %></p>
+
+<% end %>

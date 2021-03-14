@@ -1,0 +1,99 @@
+<div class= "container">
+  <div class= "row">
+    <div class= "col-md-3">
+
+     <% if @book1.errors.any? %>
+      <div class= "text-danger">
+       <h1><%= @book1.errors.count %>error</h1>
+       <% @book1.errors.full_messages.each do |message| %>
+        <div style="red">
+         <ul type="disc"><li><%= message %></li></ul>
+        </div>
+       <% end %>
+      </div>
+     <% end %>
+
+     <h1>User info</h1>
+      <%= attachment_image_tag @user,:profile_image, format:"jpeg", fallback:"no_image.jpg", size:"100x100" %>
+       <table class= "table table-striped">
+        <thead>
+         <tr>
+          <td>name</td>
+          <td><%= @user.name %></td>
+         </tr>
+         <tr>
+          <td>introduction</td>
+          <td><%= @user.introduction %></td>
+         </tr>
+         <tr>
+          <td>follows</td>
+          <td><%= link_to @user.follower.count, follows_user_path(@user.id) %></td>
+         </tr>
+         <tr>
+          <td>followers</td>
+          <td><%= link_to @user.followed.count, followers_user_path(@user.id) %></td>
+         </tr>
+        </thead>
+        <tfoot>
+         <tr>
+          <td colspan="2">
+           <% if current_user != @user %>
+           <% if @user.followed_by?(current_user) %>
+           <%= link_to "フォローを外す", user_relationships_path(@user.id),method: :delete, class:"btn btn-primary col-md-12" %>
+           <% else %>
+           <%= link_to "フォローする", user_relationships_path(@user.id),method: :post, class:"btn btn-success col-md-12" %>
+            <% end %>
+            <% end %>
+           <% if current_user == @user %>
+           <%= link_to edit_user_path(@user.id), class:"btn btn-default border border-secondary col-md-12" do %>
+             <i class="fas fa-user-cog"></i>
+             <% end %>
+             <% end %>
+          </td>
+         </tr>
+        </tfoot>
+       </table>
+
+     <h1>New book</h1>
+
+      <%= form_with model: @book1, local: true do |f| %>
+
+      <h4>Title</h4>
+      <%= f. text_field :title, class:"col-md-12" %>
+      <h4>Opinion</h4>
+      <%= f. text_area :body, class:"col-md-12" %>
+
+      <p><%= f.submit "Create Book", class:"btn btn-success "%></p>
+      <% end %>
+    </div>
+    <div class= "col-md-8 offset-md-1">
+
+     <h1>Books</h1>
+
+      <table class= "table table-striped">
+       <thead>
+        <tr>
+         <th></th>
+         <th>Title</th>
+         <th>Opinion</th>
+        </tr>
+       </thead>
+
+       <% @books.each do |book| %>
+
+       <thead>
+        <tr>
+         <td>
+          <%= link_to user_path(@user) do %>
+          <span><%= attachment_image_tag @user,:profile_image, format:"jpeg", fallback:"no_image.jpg", size:"50x50" %></span></td>
+          <% end %>
+         <td><span><%= link_to book.title, book_path(book.id) %></span></td>
+         <td><span><%= book.body %></span></td>
+       <% end %>
+        </tr>
+       </thead>
+      </table>
+     </div>
+    </div>
+  </div>
+</div>

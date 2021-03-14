@@ -1,0 +1,3 @@
+$("#comment-index").html("<%= j(render "book_comments/comment-index",book: @book) %>");
+$("textarea").val('')
+<%#上はtextareaを指定して、値（val）を消してという処理%>

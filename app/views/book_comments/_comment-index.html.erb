@@ -1,0 +1,15 @@
+<h3>投稿へのコメント</h3>
+<table class = "table table-border" >
+  <% book.book_comments.each do |book_comment| %>
+   <tr>
+       <td><%= attachment_image_tag book.user.image_id,:profile_image, format:"jpeg", fallback:"no_image.jpg", size:"50x50" %><%= book_comment.user.name %></td>
+       <td><%= book_comment.comment %></td>
+       <td><%= book_comment.created_at.strftime("%Y/%m/%d %H:%M") %></td>
+   </tr>
+   <tr>
+       <td><% if book_comment.user == current_user %>
+           <%= link_to "Destroy", book_book_comment_path(book_comment.book, book_comment), method: :delete, remote: true, class:"btn btn-danger" %>
+           <% end %></td>
+   </tr>
+  <% end %>
+</table>

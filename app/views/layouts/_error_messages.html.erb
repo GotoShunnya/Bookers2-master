@@ -1,0 +1,9 @@
+<% if model.errors.any? %>
+     <div class= "text-danger">
+
+      <h1><%= model.errors.count %>error</h1>
+       <% @book.errors.full_messages.each do |message| %>
+        <ul type="disc"><li><%= message %></li></ul>
+     <% end %>
+     </div>
+        <% end %>

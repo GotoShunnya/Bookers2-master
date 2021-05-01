@@ -1,0 +1,8 @@
+<% flash.each do |key, value| %>
+  <%= content_tag(:div, value, class: "flash flash_#{key}") %>
+<% end %>
+<!--deviseを導入した状態でflashオブジェクトを使用すると、deviseに関する通知（ログイン・ログアウト）などが発生したときのみ、keyとvalueを生成する。-->
+<!--flashには標準で、noticeとalertをの二つのkeyを生成してくれるため、両方に適応できるようにeachでkeyとvalueを取り出す。-->
+<!--またcontent_tagでHTMLタグを生成することができ、第一引数にタグ、第二引数に内容、第三引数にオプション（classなど）を設定する。-->
+<!--今回表示したいのはvalueなので、第二引数にvalueを設定している。-->
+<!--またclassにflashとflash_#{key}を設定しているため、keyがnoticeのときとalertのときでscssの表示を変えることができる。-->

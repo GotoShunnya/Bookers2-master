@@ -57,3 +57,5 @@ ja:
         subject: 'パスワードの再設定'
       unlock_instructions:
         subject: 'アカウントのロック解除'
+
+

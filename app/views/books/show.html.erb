@@ -82,6 +82,7 @@
       </tr>
      </thead>
     </table>
+    <%= render "layouts/error_messages_book", book_comment: @book_comment %> <!--エラー文でない-->
      <div id="comment-index">
        <%= render "book_comments/comment-index", book: @book %>
      </div>
